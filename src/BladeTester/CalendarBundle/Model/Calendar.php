@@ -13,12 +13,13 @@ class Calendar implements CalendarInterface {
     private $om;
     private $dispatcher;
     private $eventClass;
-    private $settings;
+    private $settingEntity;
 
-    public function __construct(ObjectManager $om, EventDispatcherInterface $dispatcher, $event_class) {
+    public function __construct(ObjectManager $om, EventDispatcherInterface $dispatcher, $eventClass, $settingEntity) {
         $this->om = $om;
         $this->dispatcher = $dispatcher;
-        $this->eventClass = $event_class;
+        $this->eventClass = $eventClass;
+        $this->settingEntity = $settingEntity;
         $this->setRepositoryClass();
     }
 
@@ -31,12 +32,12 @@ class Calendar implements CalendarInterface {
 
     public function getSettings()
     {
-        return $this->om->getRepository('BladeTesterCalendarBundle:Setting')->getSettings();
+        return $this->om->getRepository($this->settingEntity)->getSettings();
     }
 
     public function updateSettings(Settings $settings)
     {
-        return $this->om->getRepository('BladeTesterCalendarBundle:Setting')->updateSettings($settings);
+        return $this->om->getRepository($this->settingEntity)->updateSettings($settings);
     }
 
     public function getDefaultView()
